@@ -1,48 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login Page</title>
-    <link href="https://api.fontshare.com/v2/css?f[]=outfit@100,200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=outfit@100,200,300,400,500,600,700,800&display=swap"
+      rel="stylesheet"
+    />
 
-    <link rel="stylesheet" href="login.css">
-</head>
+    <link rel="stylesheet" href="login.css" />
+  </head>
 
-<body>
-
+  <body>
     <div class="container">
-        <div class="image-left">
-            <img src="./Images/ashley-_ZRWgz-a60Q-unsplash.jpg" alt="Inventory Management">
+      <div class="image-left">
+        <img
+          src="./Images/ashley-_ZRWgz-a60Q-unsplash.jpg"
+          alt="Inventory Management"
+        />
+      </div>
+
+      <div class="login-right">
+        <h3>Counta</h3>
+        <h4>Login</h4>
+        <div class="login-form">
+          <form id="login-form">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required />
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required />
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+
+            <div class="button">
+              <button type="submit">LOGIN</button>
+            </div>
+          </form>
+          <a href="./Dashboard.html"> </a>
         </div>
 
-        <div class="login-right">
-            <h3>Counta</h3>
-            <h4>Login</h4>
-            <div class="login-form">
-                <form>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" required>
-
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>  
-
-                </form>
-                <a href="./Dashboard.html"> 
-                    <div class="button">
-                        <button type="submit">LOGIN</button>
-                </div></a>
-            </div>
-
-            <div class="login-info">
-                <p><a href="./Html&Css/Signup.html" class="forgot-password">Forgot your password?</a></p>
-                <p>Don't have an account? <a href="./Signup.html" class="signup-link">Sign up here</a></p>
-            </div>
+        <div class="login-info">
+          <p>
+            <a href="./Html&Css/Signup.html" class="forgot-password"
+              >Forgot your password?</a
+            >
+          </p>
+          <p>
+            Don't have an account?
+            <a href="./Signup.html" class="signup-link">Sign up here</a>
+          </p>
         </div>
-    </div>   
- 
-</body>
+      </div>
+    </div>
+    <script>
+      document
+        .getElementById("login-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const username = document.getElementById("username").value;
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+
+          try {
+            const response = await fetch(
+              "http://localhost:3000/api/v1/user/login",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, email, password }),
+              }
+            );
+
+            if (response.ok) {
+              alert("Account created successfully!");
+              window.location.href = "dashboard.html"; // Redirect to login page after successful sign up
+            } else {
+              alert("Sign-up failed. Please try again.");
+            }
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        });
+    </script>
+  </body>
 </html>

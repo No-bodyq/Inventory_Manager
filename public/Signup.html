@@ -1,79 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up</title>
-    <link href="https://api.fontshare.com/v2/css?f[]=outfit@100,200,300,400,500,600,700,800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="signup.css">
-</head>
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=outfit@100,200,300,400,500,600,700,800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="signup.css" />
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <div class="form-container">
-            <h3>Counta</h3>
-            <h4>Create Your Account</h4>
+      <div class="form-container">
+        <h3>Counta</h3>
+        <h4>Create Your Account</h4>
 
-            <form id="signup-form">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+        <form id="signup-form">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required />
 
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required />
 
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required />
 
-                <label for="confirm-password">Confirm Password:</label>
-                <input type="password" id="confirm-password" name="confirm-password" required>
+          <label for="confirm-password">Confirm Password:</label>
+          <input
+            type="password"
+            id="confirm-password"
+            name="confirm-password"
+            required
+          />
 
-                <div class="button">
-                    <button type="submit">Sign Up</button>
-                </div>
-            </form>
+          <div class="button">
+            <button type="submit">Sign Up</button>
+          </div>
+        </form>
 
-            <div class="login-info">
-                <p>Already have an account? <a href="./index.html">Login here</a></p>
-            </div>
+        <div class="login-info">
+          <p>Already have an account? <a href="./index.html">Login here</a></p>
         </div>
+      </div>
 
-        <div class="image-container">
-            <img src="./Images/petrebels-VH-OpMRhFII-unsplash.jpg" alt="Sign Up Image">
-        </div>
+      <div class="image-container">
+        <img
+          src="./Images/petrebels-VH-OpMRhFII-unsplash.jpg"
+          alt="Sign Up Image"
+        />
+      </div>
     </div>
 
     <script>
-        document.getElementById('signup-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const username = document.getElementById('username').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
+      document
+        .getElementById("signup-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const username = document.getElementById("username").value;
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          const confirmPassword =
+            document.getElementById("confirm-password").value;
 
-            if (password !== confirmPassword) {
-                alert('Passwords do not match!');
-                return;
+          if (password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+          }
+
+          try {
+            const response = await fetch(
+              "http://localhost:3000/api/v1/user/signup",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, email, password }),
+              }
+            );
+
+            if (response.ok) {
+              alert("Account created successfully!");
+              window.location.href = "index.html"; // Redirect to login page after successful sign up
+            } else {
+              alert("Sign-up failed. Please try again.");
             }
-
-            try {
-                const response = await fetch('http://localhost:3000/auth/signup', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, email, password }),
-                });
-
-                if (response.ok) {
-                    alert('Account created successfully!');
-                    window.location.href = 'login.html';  // Redirect to login page after successful sign up
-                } else {
-                    alert('Sign-up failed. Please try again.');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
+          } catch (error) {
+            console.error("Error:", error);
+          }
         });
     </script>
-</body>
-
+  </body>
 </html>
